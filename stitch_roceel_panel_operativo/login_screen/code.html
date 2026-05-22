@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROCEEL - Iniciar sesión</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "surface-container": "#eceef0",
+                "primary-container": "#131b2e",
+                "on-secondary-fixed-variant": "#00531a",
+                "on-primary-fixed": "#131b2e",
+                "secondary-container": "#78fa87",
+                "surface-container-highest": "#e0e3e5",
+                "on-error": "#ffffff",
+                "surface": "#f7f9fb",
+                "inverse-primary": "#bec6e0",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#5de070",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "on-primary-container": "#7c839b",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#007327",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#006e25",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-tertiary-container": "#75859d",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#000000",
+                "secondary-fixed": "#7bfd89",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-surface": "#191c1e",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "on-surface-variant": "#45464d",
+                "surface-tint": "#565e74",
+                "on-error-container": "#93000a",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "on-background": "#191c1e",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed": "#002106",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed-variant": "#38485d",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "outline": "#76777d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface-bright": "#f7f9fb"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "md": "16px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "margin-desktop": "40px",
+                "xs": "4px",
+                "sm": "8px",
+                "base": "4px",
+                "gutter": "24px",
+                "lg": "24px",
+                "touch-target-min": "48px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Nunito Sans"
+                ],
+                "body-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg": [
+                        "Nunito Sans"
+                ],
+                "display-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Nunito Sans"
+                ],
+                "label-sm": [
+                        "Nunito Sans"
+                ],
+                "body-md": [
+                        "Nunito Sans"
+                ],
+                "label-md": [
+                        "Nunito Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col items-center justify-center relative p-margin-mobile md:p-margin-desktop antialiased">
+<!-- Decorative ambient background element (subtle) -->
+<div class="fixed top-0 left-0 w-full h-[265px] bg-gradient-to-b from-surface-container-high to-transparent pointer-events-none z-0 opacity-50"></div>
+<!-- Main Content Container -->
+<main class="w-full max-w-md z-10">
+<!-- Login Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-margin-mobile md:p-margin-desktop shadow-sm flex flex-col">
+<!-- Logo / Brand Header -->
+<div class="flex flex-col items-center justify-center mb-8">
+<div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4 border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-secondary-container" style="font-size: 32px; font-variation-settings: 'FILL' 1;">
+                        engineering
+                    </span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface text-center mb-2">
+                    Iniciar sesión
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant text-center">
+                    Accede con tu número de empleado
+                </p>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-[24px]">
+<!-- Input: Employee Number -->
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-on-surface" for="employee-id">
+                        Número de empleado
+                    </label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">
+                            badge
+                        </span>
+<input autocomplete="username" class="w-full h-touch-target-min pl-10 pr-4 bg-surface border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none transition-all" id="employee-id" placeholder="Ej. 12345" type="text"/>
+</div>
+</div>
+<!-- Input: Password -->
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-on-surface" for="password">
+                        Contraseña
+                    </label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">
+                            lock
+                        </span>
+<input autocomplete="current-password" class="w-full h-touch-target-min pl-10 pr-10 bg-surface border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none transition-all" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors h-[32px] w-[32px] flex items-center justify-center rounded-full" type="button">
+<span class="material-symbols-outlined" style="font-size: 20px;">
+                                visibility_off
+                            </span>
+</button>
+</div>
+</div>
+<!-- Submit Action -->
+<button class="h-touch-target-min w-full bg-secondary-container text-on-secondary-container font-label-md text-label-md rounded-xl hover:bg-secondary hover:text-on-secondary active:bg-[#00531a] flex items-center justify-center gap-2 transition-all mt-4 shadow-sm hover:shadow-md" type="button">
+                    Ingresar
+                    <span class="material-symbols-outlined" style="font-size: 20px;">
+                        login
+                    </span>
+</button>
+</form>
+</div>
+</main>
+<!-- Footer -->
+<footer class="absolute bottom-8 left-0 w-full flex justify-center pb-safe">
+<p class="font-label-sm text-label-sm text-outline">
+            ROCEEL Servicios Especializados v1.0.0
+        </p>
+</footer>
+</body></html>

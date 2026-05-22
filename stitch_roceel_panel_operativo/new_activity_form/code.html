@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nueva actividad</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Design System) -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#ffb599",
+                    "outline-variant": "#c4c6cd",
+                    "surface-container": "#eceef0",
+                    "tertiary-container": "#370e00",
+                    "error-container": "#ffdad6",
+                    "info": "#0284C7",
+                    "on-secondary-fixed-variant": "#1c4877",
+                    "on-primary": "#ffffff",
+                    "text-secondary": "#64748B",
+                    "primary": "#000000",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-card": "#FFFFFF",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#778599",
+                    "secondary-fixed": "#d3e4ff",
+                    "border-subtle": "#E2E8F0",
+                    "outline": "#74777d",
+                    "tertiary-fixed": "#ffdbce",
+                    "secondary-container": "#a2c9ff",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary-container": "#2a5483",
+                    "danger": "#DC2626",
+                    "text-primary": "#0F172A",
+                    "success": "#16A34A",
+                    "tertiary": "#000000",
+                    "extra-hour": "#F97316",
+                    "on-secondary-fixed": "#001c38",
+                    "inverse-primary": "#b9c8dd",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#2d3133",
+                    "surface": "#f7f9fb",
+                    "on-primary-fixed": "#0e1c2d",
+                    "on-tertiary-fixed-variant": "#7f2b00",
+                    "warning": "#EAB308",
+                    "secondary-fixed-dim": "#a2c9ff",
+                    "on-tertiary-container": "#e45405",
+                    "surface-dim": "#d8dadc",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3a485a",
+                    "surface-tint": "#515f72",
+                    "surface-variant": "#e0e3e5",
+                    "primary-fixed": "#d5e4fa",
+                    "on-background": "#191c1e",
+                    "secondary": "#386090",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#370e00",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "background": "#f7f9fb",
+                    "primary-container": "#0e1c2d",
+                    "on-surface-variant": "#44474c",
+                    "primary-fixed-dim": "#b9c8dd",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-bright": "#f7f9fb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "touch-target": "56px",
+                    "margin-edge": "16px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen antialiased flex flex-col">
+<!-- TopAppBar (Contextual for Task) -->
+<header class="bg-primary-container text-on-primary shadow-sm flex items-center px-gutter h-touch-target w-full z-50 sticky top-0 shrink-0">
+<button aria-label="Volver" class="h-[48px] w-[48px] flex items-center justify-center mr-sm -ml-sm rounded-full hover:bg-primary/10 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold flex-1 truncate">Nueva actividad</h1>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-3xl mx-auto p-md pb-[100px] flex flex-col gap-lg">
+<!-- Section: Detalles -->
+<section class="flex flex-col gap-md">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Detalles</h2>
+<div class="bg-surface-card border border-border-subtle rounded-lg shadow-sm p-md flex flex-col gap-md">
+<!-- Input: Cliente -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="cliente-select">Cliente</label>
+<div class="relative">
+<select class="w-full h-touch-target px-md border border-outline-variant rounded bg-surface-card text-on-surface font-body-lg focus:outline-none focus:border-2 focus:border-info focus:ring-0 appearance-none transition-colors" id="cliente-select">
+<option disabled="" value="">Selecciona un cliente</option>
+<option selected="" value="gm">Planta GM</option>
+<option value="ford">Ford Motors</option>
+<option value="nissan">Nissan Planta Sur</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<!-- Input: Actividad -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="actividad-select">Actividad</label>
+<div class="relative">
+<select class="w-full h-touch-target px-md border border-outline-variant rounded bg-surface-card text-on-surface font-body-lg focus:outline-none focus:border-2 focus:border-info focus:ring-0 appearance-none transition-colors" id="actividad-select">
+<option disabled="" value="">Selecciona una actividad</option>
+<option selected="" value="mantenimiento_husillo">Mantenimiento husillo</option>
+<option value="inspeccion">Inspección general</option>
+<option value="reparacion">Reparación de motor</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<!-- Input: Orden de trabajo -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="ot-select">Orden de trabajo</label>
+<div class="relative">
+<select class="w-full h-touch-target px-md border border-outline-variant rounded bg-surface-card text-on-surface font-body-lg focus:outline-none focus:border-2 focus:border-info focus:ring-0 appearance-none transition-colors" id="ot-select">
+<option disabled="" value="">Selecciona orden</option>
+<option selected="" value="roc1">ROC-2026-0001</option>
+<option value="roc2">ROC-2026-0002</option>
+<option value="sin_orden">Crear sin orden</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Notas -->
+<section class="flex flex-col gap-md">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Notas</h2>
+<div class="bg-surface-card border border-border-subtle rounded-lg shadow-sm p-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="notas-textarea">Notas (opcional)</label>
+<textarea class="w-full min-h-[120px] p-md border border-outline-variant rounded bg-surface-card text-on-surface font-body-lg focus:outline-none focus:border-2 focus:border-info focus:ring-0 resize-y transition-colors" id="notas-textarea" placeholder="Agrega detalles o especificaciones técnicas relevantes..."></textarea>
+</div>
+</div>
+</section>
+<!-- Info Card: Ubicación -->
+<div class="bg-surface-variant rounded-lg p-md flex gap-md items-start shadow-sm mt-sm">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight pt-xs">
+                Esta actividad se vinculará a tu ubicación actual: <span class="font-bold text-on-surface">Planta GM</span>
+</p>
+</div>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-md bg-surface-card border-t border-border-subtle shadow-[0px_-2px_10px_rgba(15,23,42,0.05)] z-40 pb-safe">
+<div class="max-w-3xl mx-auto">
+<button class="w-full h-touch-target bg-extra-hour text-on-primary font-label-lg text-label-lg font-bold uppercase rounded flex items-center justify-center gap-sm active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                Iniciar actividad
+            </button>
+</div>
+</div>
+</body></html>

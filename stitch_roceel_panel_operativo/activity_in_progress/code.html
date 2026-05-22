@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Actividad en Progreso</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "surface-container": "#eceef0",
+                "primary-container": "#131b2e",
+                "on-secondary-fixed-variant": "#00531a",
+                "on-primary-fixed": "#131b2e",
+                "secondary-container": "#78fa87",
+                "surface-container-highest": "#e0e3e5",
+                "on-error": "#ffffff",
+                "surface": "#f7f9fb",
+                "inverse-primary": "#bec6e0",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#5de070",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "on-primary-container": "#7c839b",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#007327",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#006e25",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-tertiary-container": "#75859d",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#000000",
+                "secondary-fixed": "#7bfd89",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-surface": "#191c1e",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "on-surface-variant": "#45464d",
+                "surface-tint": "#565e74",
+                "on-error-container": "#93000a",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "on-background": "#191c1e",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed": "#002106",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed-variant": "#38485d",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "outline": "#76777d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface-bright": "#f7f9fb"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "md": "16px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "margin-desktop": "40px",
+                "xs": "4px",
+                "sm": "8px",
+                "base": "4px",
+                "gutter": "24px",
+                "lg": "24px",
+                "touch-target-min": "48px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Nunito Sans"
+                ],
+                "body-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg": [
+                        "Nunito Sans"
+                ],
+                "display-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Nunito Sans"
+                ],
+                "label-sm": [
+                        "Nunito Sans"
+                ],
+                "body-md": [
+                        "Nunito Sans"
+                ],
+                "label-md": [
+                        "Nunito Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<header class="fixed top-0 w-full z-50 bg-primary-container dark:bg-primary-container shadow-sm flex justify-between items-center px-gutter min-h-[48px]">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">person</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary dark:text-on-primary-fixed">ROCEEL Operativo</h1>
+</div>
+<button aria-label="Sensors" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors text-on-primary dark:text-on-primary-fixed">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</header>
+<main class="pt-[72px] pb-[100px] px-margin-mobile md:px-margin-desktop max-w-3xl mx-auto flex flex-col gap-6">
+<div class="flex flex-col items-center justify-center py-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-fixed-dim opacity-5"></div>
+<div class="flex items-center gap-2 mb-4 text-[#51d466]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_run</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">Actividad en Curso</span>
+</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight" id="main-timer">
+                00:23:45
+            </div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Mantenimiento Preventivo #402</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="col-span-2 min-h-touch-target-min flex items-center justify-center gap-2 bg-[#51d466] text-white rounded-xl font-label-md text-label-md transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                Completar Actividad
+            </button>
+<button class="min-h-touch-target-min flex items-center justify-center gap-2 bg-surface-container-high text-on-surface rounded-xl font-label-md text-label-md border border-outline-variant transition-transform active:scale-95">
+<span class="material-symbols-outlined">pause</span>
+                Pausar
+            </button>
+<button class="min-h-touch-target-min flex items-center justify-center gap-2 bg-surface-container-high text-on-surface rounded-xl font-label-md text-label-md border border-outline-variant transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[#51d466]">description</span>
+                Agregar reporte
+            </button>
+</div>
+<section class="mt-4 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface">Reporte de la actividad</h2>
+<button class="text-[#51d466] p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-sm flex flex-col gap-2">
+<p class="font-body-md text-body-md text-on-surface line-clamp-3">
+                    Se inició la revisión del sistema hidráulico del sector B. Se detectó una ligera despresurización en la válvula principal. Se procedió al ajuste preliminar, pendiente de validación con equipo de medición especializado. El área se encuentra segura y señalizada.
+                </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-outline text-sm" style="font-size: 16px;">schedule</span>
+<span class="font-label-sm text-label-sm text-outline">Última actualización: hace 12 min</span>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe bg-surface-container-lowest dark:bg-on-primary-fixed border-t border-outline-variant dark:border-on-primary-fixed-variant h-[80px]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant transition-colors rounded-lg w-full h-full">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Inicio</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant transition-colors rounded-lg w-full h-full">
+<span class="material-symbols-outlined mb-1">schedule</span>
+<span class="font-label-sm text-label-sm">Jornada</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-[#51d466] dark:bg-on-secondary-fixed-variant text-white dark:text-secondary-fixed rounded-xl px-4 py-2 scale-90 transition-all duration-200 w-full h-full my-1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">engineering</span>
+<span class="font-label-sm text-label-sm font-bold">Actividades</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant transition-colors rounded-lg w-full h-full">
+<span class="material-symbols-outlined mb-1">description</span>
+<span class="font-label-sm text-label-sm">Reporte</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-2 hover:bg-surface-container-high dark:hover:bg-on-primary-fixed-variant transition-colors rounded-lg w-full h-full">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Perfil</span>
+</button>
+</nav>
+<script>
+        // Simple timer animation logic to make it feel alive
+        const timerElement = document.getElementById('main-timer');
+        let seconds = 23 * 60 + 45; // 00:23:45
+
+        setInterval(() => {
+            seconds++;
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            timerElement.textContent = 
+                `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }, 1000);
+    </script>
+</body></html>

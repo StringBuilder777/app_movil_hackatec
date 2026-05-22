@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROCEEL Operativo - Inicio</title>
+<!-- Fonts: Nunito Sans & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "surface-container": "#eceef0",
+                "primary-container": "#131b2e",
+                "on-secondary-fixed-variant": "#00531a",
+                "on-primary-fixed": "#131b2e",
+                "secondary-container": "#78fa87",
+                "surface-container-highest": "#e0e3e5",
+                "on-error": "#ffffff",
+                "surface": "#f7f9fb",
+                "inverse-primary": "#bec6e0",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#5de070",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "on-primary-container": "#7c839b",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#007327",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#006e25",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-tertiary-container": "#75859d",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#000000",
+                "secondary-fixed": "#7bfd89",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-surface": "#191c1e",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "on-surface-variant": "#45464d",
+                "surface-tint": "#565e74",
+                "on-error-container": "#93000a",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "on-background": "#191c1e",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed": "#002106",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed-variant": "#38485d",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "outline": "#76777d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface-bright": "#f7f9fb"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "md": "16px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "margin-desktop": "40px",
+                "xs": "4px",
+                "sm": "8px",
+                "base": "4px",
+                "gutter": "24px",
+                "lg": "24px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Nunito Sans"
+                ],
+                "body-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg": [
+                        "Nunito Sans"
+                ],
+                "display-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Nunito Sans"
+                ],
+                "label-sm": [
+                        "Nunito Sans"
+                ],
+                "body-md": [
+                        "Nunito Sans"
+                ],
+                "label-md": [
+                        "Nunito Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        /* Base styles to ensure consistency */
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 16px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-primary-container shadow-sm fixed top-0 w-full z-50 h-[64px] flex justify-between items-center px-gutter">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant flex-shrink-0">
+<!-- Using a standard placeholder for the avatar as requested by the JSON leading_avatar description -->
+<img alt="Technical Operator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC79ierhxyPqcLZB3S7Fv3QZGXrkEA5PpAvghK6k5Et_doE0vEa-FH55IIZaN2jz1CqrWc7AzajlMQ3arykd6P3N6aseAW0bZ0Bq3kHEJSedFrrAvnQAHNF1OkzVVVZB9zEv62LxngQlWxBUs_5BXmmLReL5naneigoHKgAdOMUdiFSbiSe3bvtGjPsJIZB8f_cMb5_HY6cCGVh7VxqZqDMociS1_iqq09zKsu7BbMa-1xsbQkzDL1bsnHFYWlIu3cFt2TgQcDOw"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">ROCEEL Operativo</h1>
+</div>
+<button class="w-[48px] h-[48px] flex items-center justify-center text-on-primary hover:bg-primary/10 rounded-full transition-transform duration-150 active:scale-95">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 pt-[80px] pb-[100px] px-gutter flex flex-col gap-6">
+<!-- Active Shift Card 
+             Note: Utilizing secondary-container to represent the active/prominent state as per the strict design system palette, providing high contrast and focus. -->
+<section class="bg-surface-container-highest rounded-xl p-5 border border-outline-variant relative overflow-hidden shadow-sm">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-[#51d466]"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[#51d466]" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+                        Jornada activa
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Desde 08:14</p>
+</div>
+<div class="text-right">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface block">2h 35m</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Transcurrido</span>
+</div>
+</div>
+<div class="bg-surface rounded-lg p-3 border border-outline-variant flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">location_on</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Taller Ramos Arizpe</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sector Industrial Norte</p>
+</div>
+</div>
+</section>
+<!-- Daily Summary Bento Grid -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Hours Logged -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">schedule</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant">Horas hoy</h3>
+</div>
+<div>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">2.5</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 8h</span>
+</div>
+</div>
+<!-- Activities -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">engineering</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant">Actividades</h3>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">3</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Completadas</span>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<section class="flex flex-col gap-4 mt-auto">
+<button class="w-full min-h-[48px] bg-surface-container-lowest border border-outline text-on-surface rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 active:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">map</span>
+                Ver mapa
+            </button>
+<button class="w-full min-h-[48px] bg-[#51d466] text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 hover:opacity-90 active:opacity-80 transition-opacity shadow-sm">
+<span class="material-symbols-outlined">logout</span>
+                Hacer check-out
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe bg-surface-container-lowest border-t border-outline-variant h-[80px]">
+<!-- Inicio (Active) -->
+<button class="flex flex-col items-center justify-center bg-[#51d466] text-white rounded-xl px-4 py-2 min-w-[64px] transition-all duration-200 scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Inicio</span>
+</button>
+<!-- Jornada (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 min-w-[64px] hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-label-sm text-label-sm mt-1">Jornada</span>
+</button>
+<!-- Actividades (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 min-w-[64px] hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">engineering</span>
+<span class="font-label-sm text-label-sm mt-1">Actividades</span>
+</button>
+<!-- Reporte (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 min-w-[64px] hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm mt-1">Reporte</span>
+</button>
+<!-- Perfil (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 min-w-[64px] hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Perfil</span>
+</button>
+</nav>
+</body></html>

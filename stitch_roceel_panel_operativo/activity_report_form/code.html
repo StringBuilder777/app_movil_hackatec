@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reporte de Actividad - ROCEEL Operativo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "surface-container": "#eceef0",
+                "primary-container": "#131b2e",
+                "on-secondary-fixed-variant": "#00531a",
+                "on-primary-fixed": "#131b2e",
+                "secondary-container": "#51d466",
+                "surface-container-highest": "#e0e3e5",
+                "on-error": "#ffffff",
+                "surface": "#f7f9fb",
+                "inverse-primary": "#bec6e0",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#5de070",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "on-primary-container": "#7c839b",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#ffffff",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#51d466",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-tertiary-container": "#75859d",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#000000",
+                "secondary-fixed": "#7bfd89",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-surface": "#191c1e",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "on-surface-variant": "#45464d",
+                "surface-tint": "#565e74",
+                "on-error-container": "#93000a",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "on-background": "#191c1e",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed": "#002106",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed-variant": "#38485d",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "outline": "#76777d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface-bright": "#f7f9fb"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "md": "16px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "margin-desktop": "40px",
+                "xs": "4px",
+                "sm": "8px",
+                "base": "8px",
+                "gutter": "16px",
+                "lg": "24px",
+                "touch-target-min": "48px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Nunito Sans"
+                ],
+                "body-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg": [
+                        "Nunito Sans"
+                ],
+                "display-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Nunito Sans"
+                ],
+                "label-sm": [
+                        "Nunito Sans"
+                ],
+                "body-md": [
+                        "Nunito Sans"
+                ],
+                "label-md": [
+                        "Nunito Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- Task-specific TopAppBar (Navigation Shell Suppressed due to task-focus) -->
+<header class="flex justify-between items-center px-gutter h-[64px] w-full z-50 bg-primary-container text-on-primary shadow-sm shrink-0">
+<button aria-label="Volver" class="h-touch-target-min w-touch-target-min flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors -ml-2">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold truncate flex-1 text-center pr-[40px]">Reporte de actividad</h1>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col px-gutter py-margin-desktop max-w-3xl mx-auto w-full gap-6">
+<!-- Metadata Card (Level 1 Elevation) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-5 shadow-sm">
+<!-- Timestamp -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Timestamp</p>
+<p class="font-body-md text-body-md text-on-surface font-semibold">12 Oct 2023, 14:30 hrs</p>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30 w-full"></div>
+<!-- GPS -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Ubicación GPS</p>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Lat: 19.4326, Lng: -99.1332</p>
+<p class="font-label-sm text-label-sm text-outline mt-0.5">Planta Norte - Sector B</p>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30 w-full"></div>
+<!-- Activity -->
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">engineering</span>
+</div>
+<div class="flex-1">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Actividad Asignada</p>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Mantenimiento preventivo de válvulas de presión</p>
+</div>
+</div>
+</section>
+<!-- Report Input Area -->
+<section class="flex flex-col gap-2 flex-1">
+<label class="font-label-md text-label-md text-on-surface pl-1" for="reportContent">
+                ¿Qué se hizo? <span class="text-error">*</span>
+</label>
+<div class="relative flex-1 min-h-[200px]">
+<textarea class="w-full h-full min-h-[200px] p-4 bg-surface-container-lowest border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-secondary-container focus:border-secondary-container resize-none shadow-sm transition-shadow placeholder:text-outline/70" id="reportContent" maxlength="1000" placeholder="Describe detalladamente las acciones realizadas, herramientas utilizadas y observaciones relevantes..."></textarea>
+</div>
+<div class="flex justify-between items-center px-1 mt-1">
+<span class="font-label-sm text-label-sm text-error opacity-0 transition-opacity" id="errorMessage">El reporte no puede estar vacío.</span>
+<span class="font-label-sm text-label-sm text-outline ml-auto" id="charCounter">0 / 1000</span>
+</div>
+</section>
+<!-- Action Buttons (Sticky on mobile if needed, but flex-col keeps them at bottom) -->
+<section class="flex gap-4 pt-6 pb-margin-mobile border-t border-outline-variant/30 mt-auto">
+<button class="flex-1 h-touch-target-min flex items-center justify-center rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface font-label-md text-label-md hover:bg-surface-container-low active:bg-surface-container transition-colors" type="button">
+                Cancelar
+            </button>
+<button class="flex-1 h-touch-target-min flex items-center justify-center rounded-xl bg-secondary-container text-on-secondary-container font-label-md text-label-md shadow-sm hover:brightness-95 active:brightness-90 transition-all" id="saveBtn" type="button">
+                Guardar reporte
+            </button>
+</section>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('reportContent');
+            const counter = document.getElementById('charCounter');
+            const saveBtn = document.getElementById('saveBtn');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Character counter logic
+            textarea.addEventListener('input', (e) => {
+                const currentLength = e.target.value.length;
+                counter.textContent = `${currentLength} / 1000`;
+                
+                if (currentLength > 0) {
+                    errorMessage.classList.add('opacity-0');
+                    textarea.classList.remove('border-error', 'focus:ring-error', 'focus:border-error');
+                    textarea.classList.add('border-outline-variant', 'focus:ring-secondary-container', 'focus:border-secondary-container');
+                }
+            });
+
+            // Basic validation on save
+            saveBtn.addEventListener('click', () => {
+                if (textarea.value.trim() === '') {
+                    errorMessage.classList.remove('opacity-0');
+                    textarea.classList.remove('border-outline-variant', 'focus:ring-secondary-container', 'focus:border-secondary-container');
+                    textarea.classList.add('border-error', 'focus:ring-error', 'focus:border-error');
+                    textarea.focus();
+                    
+                    // Shake animation effect
+                    textarea.style.transform = 'translateX(-5px)';
+                    setTimeout(() => textarea.style.transform = 'translateX(5px)', 50);
+                    setTimeout(() => textarea.style.transform = 'translateX(-5px)', 100);
+                    setTimeout(() => textarea.style.transform = 'translateX(5px)', 150);
+                    setTimeout(() => textarea.style.transform = 'translateX(0)', 200);
+                } else {
+                    // Simulate save action
+                    saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">progress_activity</span> Guardando...';
+                    saveBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                    
+                    setTimeout(() => {
+                        saveBtn.innerHTML = '<span class="material-symbols-outlined mr-2">check</span> Guardado';
+                        saveBtn.classList.replace('bg-secondary-container', 'bg-on-surface');
+                        saveBtn.classList.replace('text-on-secondary-container', 'text-surface');
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body></html>

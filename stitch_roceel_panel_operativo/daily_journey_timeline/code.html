@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jornada en curso</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "surface-container": "#eceef0",
+                "primary-container": "#131b2e",
+                "on-secondary-fixed-variant": "#00531a",
+                "on-primary-fixed": "#131b2e",
+                "secondary-container": "#78fa87",
+                "surface-container-highest": "#e0e3e5",
+                "on-error": "#ffffff",
+                "surface": "#f7f9fb",
+                "inverse-primary": "#bec6e0",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#5de070",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "on-primary-container": "#7c839b",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-container": "#007327",
+                "surface-container-low": "#f2f4f6",
+                "secondary": "#006e25",
+                "on-primary-fixed-variant": "#3f465c",
+                "on-tertiary-container": "#75859d",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#000000",
+                "secondary-fixed": "#7bfd89",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#0b1c30",
+                "on-surface": "#191c1e",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "on-surface-variant": "#45464d",
+                "surface-tint": "#565e74",
+                "on-error-container": "#93000a",
+                "primary": "#000000",
+                "error-container": "#ffdad6",
+                "on-background": "#191c1e",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed": "#002106",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed-variant": "#38485d",
+                "background": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "outline": "#76777d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface-bright": "#f7f9fb"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "md": "16px",
+                "margin-mobile": "16px",
+                "xl": "32px",
+                "margin-desktop": "40px",
+                "xs": "4px",
+                "sm": "8px",
+                "base": "4px",
+                "gutter": "24px",
+                "lg": "24px"
+        },
+        "fontFamily": {
+                "headline-md": [
+                        "Nunito Sans"
+                ],
+                "body-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg": [
+                        "Nunito Sans"
+                ],
+                "display-lg": [
+                        "Nunito Sans"
+                ],
+                "headline-lg-mobile": [
+                        "Nunito Sans"
+                ],
+                "label-sm": [
+                        "Nunito Sans"
+                ],
+                "body-md": [
+                        "Nunito Sans"
+                ],
+                "label-md": [
+                        "Nunito Sans"
+                ]
+        },
+        "fontSize": {
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.04em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-[100px]">
+<!-- TopAppBar -->
+<header class="bg-primary-container shadow-sm flex justify-between items-center px-gutter h-14 w-full z-50 sticky top-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<!-- Avatar placeholder, purely css -->
+<div class="w-full h-full bg-primary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+</div>
+<h1 class="font-headline-md text-[20px] font-bold text-on-primary">ROCEEL Operativo</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center text-on-primary hover:bg-primary/10 rounded-full transition-transform duration-150 active:scale-95">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="p-gutter max-w-3xl mx-auto space-y-6">
+<!-- Header Info -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Jornada 04 Nov</h2>
+<p class="font-body-md text-on-surface-variant mt-1">ID: TR-8924 • Turno Matutino</p>
+</div>
+<div class="bg-secondary-container/20 text-secondary-fixed-dim px-3 py-1 rounded-full flex items-center gap-1 border border-secondary/20">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+<span class="font-label-md text-label-md">En curso</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-outline-variant/50">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Inicio</p>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold mt-1">07:00 AM</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Duración act.</p>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold mt-1">4h 32m</p>
+</div>
+</div>
+</section>
+<!-- Vertical Timeline -->
+<section class="relative ml-4 md:ml-8 mt-8">
+<!-- Timeline Line -->
+<div class="absolute left-4 top-4 bottom-8 w-0.5 bg-outline-variant"></div>
+<!-- Segment 1: Completed -->
+<div class="relative flex gap-6 pb-8">
+<!-- Timeline Node -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">check</span>
+</div>
+</div>
+<!-- Content Card -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant p-4 shadow-sm opacity-75">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline-variant">factory</span>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Trabajo</h3>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant">07:00 - 09:30</span>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Taller Ramos Arizpe</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Mantenimiento preventivo L1</p>
+</div>
+</div>
+<!-- Segment 2: Transit (Info) -->
+<div class="relative flex gap-6 pb-8">
+<!-- Timeline Node -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary-fixed border-2 border-primary-fixed-dim flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-primary-container text-[18px]">directions_car</span>
+</div>
+</div>
+<!-- Content Card -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border-l-4 border-l-primary-fixed border-y border-r border-outline-variant p-4 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">route</span>
+<h3 class="font-label-md text-label-md text-primary uppercase tracking-wider">En Tránsito</h3>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant">09:30 - 10:15</span>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-surface">Desplazamiento a locación 2</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">45 min trayecto estimado</p>
+</div>
+</div>
+<!-- Segment 3: Active -->
+<div class="relative flex gap-6">
+<!-- Timeline Node -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-secondary-container border-2 border-secondary flex items-center justify-center mt-1 shadow-[0_0_0_4px_rgba(93,224,112,0.2)] animate-pulse">
+<span class="material-symbols-outlined text-on-secondary-container text-[18px]">build</span>
+</div>
+</div>
+<!-- Content Card -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl border-2 border-secondary-container p-4 shadow-md">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">engineering</span>
+<h3 class="font-label-md text-label-md text-secondary-container uppercase tracking-wider">Trabajo • Activo</h3>
+</div>
+<span class="font-body-md text-body-md text-secondary-container font-semibold">10:15 - Actual</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Planta GM</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 mb-4">Inspección de línea de ensamblaje B</p>
+<!-- Nested Action within active segment -->
+<button class="w-full flex items-center justify-center gap-2 bg-surface-container-high hover:bg-surface-dim text-on-surface rounded-lg h-12 transition-colors duration-200 border border-outline-variant">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-md text-label-md">Agregar nota rápida</span>
+</button>
+</div>
+</div>
+<!-- Upcoming (Faded) -->
+<div class="relative flex gap-6 pt-8 pb-4">
+<!-- Timeline Line Extender -->
+<div class="absolute left-4 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-outline-variant opacity-50"></div>
+<!-- Timeline Node -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-transparent border-2 border-dashed border-outline-variant flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-outline-variant text-[18px]">schedule</span>
+</div>
+</div>
+<!-- Content Card -->
+<div class="flex-1 bg-surface rounded-xl border border-dashed border-outline-variant p-4 opacity-50">
+<h4 class="font-body-lg text-body-lg text-on-surface-variant">Fin de Jornada Esperado</h4>
+<span class="font-body-md text-body-md text-on-surface-variant">15:00 HRS</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-[100px] right-gutter w-14 h-14 bg-[#51d466] text-white rounded-2xl shadow-lg flex items-center justify-center hover:bg-[#51d466]/90 transition-colors duration-200 z-40 active:scale-95 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe bg-surface-container-lowest border-t border-outline-variant h-[80px]">
+<!-- Item: Inicio -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all duration-200 rounded-xl">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md mt-1">Inicio</span>
+</button>
+<!-- Item: Jornada (Active) -->
+<button class="flex flex-col items-center justify-center bg-[#51d466]/20 text-[#00531a] rounded-xl px-4 py-2 hover:bg-[#51d466]/30 transition-all duration-200 scale-95 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span class="font-label-md text-label-md mt-1">Jornada</span>
+</button>
+<!-- Item: Actividades -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all duration-200 rounded-xl">
+<span class="material-symbols-outlined">engineering</span>
+<span class="font-label-md text-label-md mt-1">Actividades</span>
+</button>
+<!-- Item: Reporte -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all duration-200 rounded-xl">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md mt-1">Reporte</span>
+</button>
+<!-- Item: Perfil -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all duration-200 rounded-xl">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md mt-1">Perfil</span>
+</button>
+</nav>
+</body></html>

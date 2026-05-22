@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Check-In Operativo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#ffb599",
+                      "outline-variant": "#c4c6cd",
+                      "surface-container": "#eceef0",
+                      "tertiary-container": "#370e00",
+                      "error-container": "#ffdad6",
+                      "info": "#0284C7",
+                      "on-secondary-fixed-variant": "#1c4877",
+                      "on-primary": "#ffffff",
+                      "text-secondary": "#64748B",
+                      "primary": "#000000",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-card": "#FFFFFF",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#778599",
+                      "secondary-fixed": "#d3e4ff",
+                      "border-subtle": "#E2E8F0",
+                      "outline": "#74777d",
+                      "tertiary-fixed": "#ffdbce",
+                      "secondary-container": "#a2c9ff",
+                      "on-surface": "#191c1e",
+                      "surface-container-low": "#f2f4f6",
+                      "on-secondary-container": "#2a5483",
+                      "danger": "#DC2626",
+                      "text-primary": "#0F172A",
+                      "success": "#16A34A",
+                      "tertiary": "#000000",
+                      "extra-hour": "#F97316",
+                      "on-secondary-fixed": "#001c38",
+                      "inverse-primary": "#b9c8dd",
+                      "error": "#ba1a1a",
+                      "inverse-surface": "#2d3133",
+                      "surface": "#f7f9fb",
+                      "on-primary-fixed": "#0e1c2d",
+                      "on-tertiary-fixed-variant": "#7f2b00",
+                      "warning": "#EAB308",
+                      "secondary-fixed-dim": "#a2c9ff",
+                      "on-tertiary-container": "#e45405",
+                      "surface-dim": "#d8dadc",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#3a485a",
+                      "surface-tint": "#515f72",
+                      "surface-variant": "#e0e3e5",
+                      "primary-fixed": "#d5e4fa",
+                      "on-background": "#191c1e",
+                      "secondary": "#386090",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed": "#370e00",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "background": "#f7f9fb",
+                      "primary-container": "#0e1c2d",
+                      "on-surface-variant": "#44474c",
+                      "primary-fixed-dim": "#b9c8dd",
+                      "inverse-on-surface": "#eff1f3",
+                      "surface-bright": "#f7f9fb"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "sm": "8px",
+                      "touch-target": "56px",
+                      "margin-edge": "16px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-primary-container text-on-primary shadow-sm flex justify-between items-center px-gutter h-touch-target w-full z-50 shrink-0">
+<button aria-label="Volver" class="w-[40px] h-[40px] flex items-center justify-center hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-primary">Check-In</h1>
+<div class="w-[40px]"></div> <!-- Spacer to center title -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 relative flex flex-col h-full w-full">
+<!-- Map Area (Top 60%) -->
+<div class="h-[60%] w-full relative bg-surface-container-low overflow-hidden flex-shrink-0">
+<!-- Simulated Map Image Background -->
+<div class="absolute inset-0 bg-cover bg-center" data-location="Ramos Arizpe, Mexico" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVXT6eXTHsKadpEJ5JlColLbftKNYy1AP23Ceh5V2EPnDmF1we8I0PKdau7c89WSPGaoxH57EGQEDvHZD4vMLwM0BdzHw-wmtgGtoegRtThGd9SA5MVllvjxjapaw6Qw3jT50clmkyRu175KBozwIQr4m4SIpWPjWz0v6Nm2ow73eXHEtUI1Ia8VTcj0uu0m4g5nKnPrzvAKoAl61gI2gHrfHduDdujm0L5C3FErlYxDkIpkYTWXISv9ycQ8seJQ83fWqPTZwlLw');">
+<!-- Map Overlay tint for readability -->
+<div class="absolute inset-0 bg-white/20"></div>
+</div>
+<!-- Geofence 1: Active (Taller Ramos Arizpe) -->
+<div class="absolute top-[40%] left-[50%] w-[180px] h-[180px] -ml-[90px] -mt-[90px] rounded-full border-2 border-success bg-success/10 flex items-center justify-center animate-pulse">
+<div class="absolute top-2 text-center w-full font-label-md text-label-md text-success font-bold text-xs bg-white/80 px-2 py-1 rounded-full border border-success/30 shadow-sm backdrop-blur-sm">Taller Ramos Arizpe</div>
+<!-- User Marker (Blue) -->
+<div class="relative w-[32px] h-[32px]">
+<div class="absolute inset-0 bg-info rounded-full opacity-30 animate-ping"></div>
+<div class="relative w-full h-full bg-info text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white z-10">
+<span class="material-symbols-outlined text-[16px] font-bold" style="font-variation-settings: 'FILL' 1;">person_pin_circle</span>
+</div>
+</div>
+</div>
+<!-- Geofence 2: Inactive (Planta GM) -->
+<div class="absolute top-[15%] left-[20%] w-[120px] h-[120px] rounded-full border border-outline bg-outline/5 flex flex-col items-center justify-start pt-2">
+<div class="font-label-md text-label-md text-outline font-bold text-xs bg-white/80 px-2 py-1 rounded-full border border-outline/30 shadow-sm backdrop-blur-sm">Planta GM</div>
+</div>
+<!-- Map Controls overlay -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-2">
+<button class="w-[48px] h-[48px] bg-surface-card rounded-full shadow-md border border-border-subtle flex items-center justify-center text-text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+<div class="flex flex-col bg-surface-card rounded-xl shadow-md border border-border-subtle overflow-hidden">
+<button class="w-[48px] h-[48px] flex items-center justify-center text-text-primary hover:bg-surface-container-low transition-colors border-b border-border-subtle">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-[48px] h-[48px] flex items-center justify-center text-text-primary hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Status Card Area (Bottom 40%) -->
+<div class="flex-1 bg-surface rounded-t-xl -mt-4 relative z-20 shadow-[0_-4px_15px_rgba(0,0,0,0.05)] flex flex-col p-md gap-md overflow-y-auto pb-safe">
+<!-- Drag Handle indicator -->
+<div class="w-[40px] h-[4px] bg-outline-variant rounded-full mx-auto mt-2 mb-2"></div>
+<h2 class="font-headline-md text-headline-md text-text-primary mb-2">Validación de Ubicación</h2>
+<!-- Success Status Card -->
+<div class="bg-[#f0fdf4] border border-success rounded-lg p-md flex items-start gap-md shadow-sm">
+<div class="w-[40px] h-[40px] rounded-full bg-success/20 text-success flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-[#166534] uppercase tracking-wide">✓ Dentro de zona válida</span>
+<span class="font-body-lg text-body-lg text-text-primary font-bold mt-1">Taller Ramos Arizpe</span>
+</div>
+</div>
+<!-- Technical Details Grid -->
+<div class="grid grid-cols-2 gap-md mt-sm">
+<!-- GPS Indicator -->
+<div class="bg-surface-card border border-border-subtle rounded-lg p-sm flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-outline">satellite_alt</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Precisión GPS</span>
+<span class="font-body-md text-body-md font-bold text-text-primary">±8m</span>
+</div>
+</div>
+<!-- Time Indicator -->
+<div class="bg-surface-card border border-border-subtle rounded-lg p-sm flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-success">schedule</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-success uppercase">08:14</span>
+<span class="font-body-md text-body-md font-bold text-text-primary">Horario laboral</span>
+</div>
+</div>
+</div>
+<!-- Spacer to push button to bottom -->
+<div class="flex-1"></div>
+<!-- Primary Action Button -->
+<button class="w-full h-[56px] bg-[#EA580C] hover:bg-[#c2410c] active:bg-[#9a3412] text-white font-label-lg text-label-lg font-bold uppercase rounded-lg shadow-md flex items-center justify-center gap-2 transition-colors mt-lg shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+                Confirmar check-in
+            </button>
+</div>
+</main>
+</body></html>
