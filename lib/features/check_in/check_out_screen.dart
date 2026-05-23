@@ -15,6 +15,13 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   bool _isProcessing = false;
 
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = duration.inHours;
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    return "${hours}h ${minutes}m";
+  }
+
   Future<void> _handleCheckOut(AppState state) async {
     setState(() {
       _isProcessing = true;
@@ -50,6 +57,29 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Widget build(BuildContext context) {
     final state = Provider.of<AppState>(context);
     final theme = Theme.of(context);
+
+    final normalDuration = state.shiftElapsed;
+    final extraDuration = state.simulatedExtraHours ? const Duration(hours: 1, minutes: 25) : Duration.zero;
+    final transitDuration = (state.activeActivity == null && state.isCheckedIn) ? const Duration(minutes: 18) : Duration.zero;
+    final outsideDuration = !state.simulatedInsideZone ? const Duration(minutes: 5) : Duration.zero;
+
+    final totalDuration = normalDuration + extraDuration + transitDuration + outsideDuration;
+
+    final String normalTime = _formatDuration(normalDuration);
+    final String extraTime = _formatDuration(extraDuration);
+    final String transitTime = _formatDuration(transitDuration);
+    final String outsideTime = _formatDuration(outsideDuration);
+    final String totalTime = _formatDuration(totalDuration);
+
+    final String completedActivitiesCount = state.activities.length.toString();
+    
+    final visitedLocations = state.activities.map((act) => act['client']?.toString() ?? '').where((c) => c.isNotEmpty).toSet();
+    if (state.currentZoneName.isNotEmpty && state.currentZoneName != "Fuera de zona asignada") {
+      visitedLocations.add(state.currentZoneName);
+    }
+    final String visitedLocationsCount = (visitedLocations.isEmpty ? 1 : visitedLocations.length).toString();
+
+    final String reportsCapturedCount = state.reports.length.toString();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -99,25 +129,25 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     _buildBreakdownItem(
                       iconColor: AppColors.success,
                       title: 'Horas normales',
-                      value: '6h 12m',
+                      value: normalTime,
                     ),
                     const Divider(height: 24),
                     _buildBreakdownItem(
                       iconColor: AppColors.extraHourBadge,
                       title: 'Horas extra',
-                      value: '1h 25m',
+                      value: extraTime,
                     ),
                     const Divider(height: 24),
                     _buildBreakdownItem(
                       iconColor: AppColors.info,
                       title: 'En tránsito',
-                      value: '0h 18m',
+                      value: transitTime,
                     ),
                     const Divider(height: 24),
                     _buildBreakdownItem(
                       iconColor: AppColors.warning,
                       title: 'Fuera de zona',
-                      value: '0h 05m',
+                      value: outsideTime,
                     ),
 
                     const Divider(height: 32, thickness: 1.5),
@@ -130,7 +160,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         Text(
-                          '7h 55m',
+                          totalTime,
                           style: theme.textTheme.titleLarge?.copyWith(
                             color: AppColors.textDark,
                             fontSize: 18,
@@ -155,11 +185,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    _buildStatsRow(Icons.engineering_rounded, 'Actividades completadas', '5'),
+                    _buildStatsRow(Icons.engineering_rounded, 'Actividades completadas', completedActivitiesCount),
                     const SizedBox(height: 12),
-                    _buildStatsRow(Icons.pin_drop_rounded, 'Ubicaciones visitadas', '2'),
+                    _buildStatsRow(Icons.pin_drop_rounded, 'Ubicaciones visitadas', visitedLocationsCount),
                     const SizedBox(height: 12),
-                    _buildStatsRow(Icons.description_rounded, 'Reportes capturados', '5'),
+                    _buildStatsRow(Icons.description_rounded, 'Reportes capturados', reportsCapturedCount),
                   ],
                 ),
               ),
