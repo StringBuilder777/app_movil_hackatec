@@ -12,9 +12,22 @@ class ApiConfig {
   /// If you are running on an Android Emulator, you can use 'http://10.0.2.2:8000'.
   static String get baseUrl => dotenv.env['API_BASE_URL'] ?? 'http://192.168.1.100:8000';
 
-  // Auth endpoints
+  // Endpoints
   static const String loginEndpoint = '/auth/login';
+  static const String actividadesEndpoint = '/actividades';
+  static const String clientesEndpoint = '/clientes';
+  static const String localizacionesEndpoint = '/localizaciones';
+  static const String checkinEndpoint = '/jornadas/checkin';
+  static const String checkoutEndpoint = '/jornadas/checkout';
+  static const String activaJornadaEndpoint = '/jornadas/activa';
 
   // Full URL helpers
   static Uri get loginUrl => Uri.parse('$baseUrl$loginEndpoint');
+  static Uri get actividadesUrl => Uri.parse('$baseUrl$actividadesEndpoint');
+  static Uri get clientesUrl => Uri.parse('$baseUrl$clientesEndpoint');
+  static Uri get localizacionesUrl => Uri.parse('$baseUrl$localizacionesEndpoint');
+  static Uri get checkinUrl => Uri.parse('$baseUrl$checkinEndpoint');
+  static Uri get checkoutUrl => Uri.parse('$baseUrl$checkoutEndpoint');
+  static Uri get activaJornadaUrl => Uri.parse('$baseUrl$activaJornadaEndpoint');
 }
+

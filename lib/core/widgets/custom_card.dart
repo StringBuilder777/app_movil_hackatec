@@ -19,11 +19,10 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final borderRadiusValue = BorderRadius.circular(radius ?? 12);
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: color ?? AppColors.white,
-        borderRadius: BorderRadius.circular(radius ?? 12),
-        border: border ?? Border.all(color: AppColors.border, width: 1),
+        borderRadius: borderRadiusValue,
         boxShadow: [
           BoxShadow(
             color: AppColors.textDark.withOpacity(0.04),
@@ -37,8 +36,21 @@ class CustomCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: padding ?? const EdgeInsets.all(16),
-      child: child,
+      child: Material(
+        color: color ?? AppColors.white,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadiusValue,
+          side: BorderSide(
+            color: border?.top.color ?? AppColors.border,
+            width: border?.top.width ?? 1.0,
+          ),
+        ),
+        child: Padding(
+          padding: padding ?? const EdgeInsets.all(16),
+          child: child,
+        ),
+      ),
     );
   }
 }

@@ -44,53 +44,66 @@ class PermissionsScreen extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Location Permission Card (Mandatory)
-              CustomCard(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: state.locationPermission ? AppColors.success.withOpacity(0.1) : AppColors.primaryHeader.withOpacity(0.05),
-                        shape: BoxShape.circle,
+              GestureDetector(
+                onTap: () async {
+                  if (!state.locationPermission) {
+                    await state.checkAndRequestLocationPermission();
+                  } else {
+                    state.setLocationPermission(false);
+                  }
+                },
+                child: CustomCard(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: state.locationPermission ? AppColors.success.withOpacity(0.1) : AppColors.primaryHeader.withOpacity(0.05),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.pin_drop_rounded,
+                          color: state.locationPermission ? AppColors.success : AppColors.primaryButton,
+                          size: 28,
+                        ),
                       ),
-                      child: Icon(
-                        Icons.pin_drop_rounded,
-                        color: state.locationPermission ? AppColors.success : AppColors.primaryButton,
-                        size: 28,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ubicación (Siempre activa)',
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Ubicación (Siempre activa)',
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            'Es obligatoria para validar que te encuentras dentro de las zonas industriales autorizadas al hacer check-in/out.',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: AppColors.textSecondary,
+                            const SizedBox(height: 6),
+                            Text(
+                              'Es obligatoria para validar que te encuentras dentro de las zonas industriales autorizadas al hacer check-in/out.',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Checkbox(
-                      activeColor: AppColors.success,
-                      value: state.locationPermission,
-                      onChanged: (val) {
-                        state.setLocationPermission(val ?? false);
-                      },
-                    ),
-                  ],
+                      Checkbox(
+                        activeColor: AppColors.success,
+                        value: state.locationPermission,
+                        onChanged: (val) async {
+                          if (val == true) {
+                            await state.checkAndRequestLocationPermission();
+                          } else {
+                            state.setLocationPermission(false);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

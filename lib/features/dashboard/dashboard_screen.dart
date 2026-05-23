@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
@@ -31,7 +33,19 @@ class DashboardScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16.0),
           child: CircleAvatar(
             backgroundColor: AppColors.primaryHighlight.withOpacity(0.3),
-            child: const Text('JP', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+            child: Text(
+              state.employeeName.trim().isEmpty
+                  ? 'RO'
+                  : state.employeeName
+                      .trim()
+                      .split(' ')
+                      .where((n) => n.isNotEmpty)
+                      .map((n) => n[0])
+                      .take(2)
+                      .join()
+                      .toUpperCase(),
+              style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
         actions: [
@@ -57,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             // Saludo Técnico
             Text(
-              'Hola, ${state.employeeName.split(' ')[0]}',
+              'Hola, ${state.employeeName.trim().isNotEmpty ? state.employeeName.trim().split(' ')[0] : 'Técnico'}',
               style: theme.textTheme.displayLarge?.copyWith(fontSize: 28),
             ),
             const SizedBox(height: 4),
@@ -162,32 +176,83 @@ class DashboardScreen extends StatelessWidget {
                         color: AppColors.border,
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // Graphic representation of a map
-                          Positioned.fill(
-                            child: Icon(Icons.map_rounded, size: 80, color: AppColors.textSecondary.withOpacity(0.15)),
-                          ),
-                          // Simulated radar circle
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryHighlight.withOpacity(0.2),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          Container(
-                            width: 16,
-                            height: 16,
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryHighlight,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.white, width: 2),
-                            ),
-                          ),
-                        ],
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                        child: state.currentPosition == null
+                            ? Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Positioned.fill(
+                                    child: Container(
+                                      color: AppColors.backgroundSecondary,
+                                      child: Icon(Icons.map_rounded, size: 80, color: AppColors.textSecondary.withOpacity(0.15)),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryHighlight.withOpacity(0.2),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryHighlight,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: AppColors.white, width: 2),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : FlutterMap(
+                                options: MapOptions(
+                                  initialCenter: LatLng(state.currentPosition!.latitude, state.currentPosition!.longitude),
+                                  initialZoom: 15.0,
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                    userAgentPackageName: 'com.hackatec.roceel.app',
+                                  ),
+                                  MarkerLayer(
+                                    markers: [
+                                      Marker(
+                                        point: LatLng(state.currentPosition!.latitude, state.currentPosition!.longitude),
+                                        width: 40.0,
+                                        height: 40.0,
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Container(
+                                              width: 32,
+                                              height: 32,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primaryHighlight.withOpacity(0.3),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 14,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primaryHighlight,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: AppColors.white, width: 2),
+                                                boxShadow: const [
+                                                  BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2)),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                       ),
                     ),
                     Padding(
@@ -201,12 +266,19 @@ class DashboardScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Zona Industrial Sector B',
+                                  state.currentPosition != null
+                                      ? 'Ubicación GPS Detectada'
+                                      : 'Zona Industrial Sector B',
                                   style: theme.textTheme.titleLarge?.copyWith(fontSize: 14),
                                 ),
                                 Text(
-                                  'Coahuila, México',
-                                  style: theme.textTheme.bodyMedium,
+                                  state.currentPosition != null
+                                      ? 'Lat: ${state.currentPosition!.latitude.toStringAsFixed(6)}, Lng: ${state.currentPosition!.longitude.toStringAsFixed(6)} (±${state.currentPosition!.accuracy.toStringAsFixed(1)}m)'
+                                      : 'Coahuila, México',
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: state.currentPosition != null ? AppColors.success : AppColors.textSecondary,
+                                    fontWeight: state.currentPosition != null ? FontWeight.bold : FontWeight.normal,
+                                  ),
                                 ),
                               ],
                             ),

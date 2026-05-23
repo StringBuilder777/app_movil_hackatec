@@ -15,8 +15,8 @@ class NewActivityScreen extends StatefulWidget {
 }
 
 class _NewActivityScreenState extends State<NewActivityScreen> {
-  final List<String> _clients = ['Planta GM', 'Taller Ramos Arizpe', 'Planta Caterpillar'];
-  final List<String> _activityTypes = [
+  final List<String> _clientsFallback = ['Planta GM', 'Taller Ramos Arizpe', 'Planta Caterpillar'];
+  final List<String> _activityTypesFallback = [
     'Mantenimiento Preventivo L1',
     'Diagnóstico de Servomotor',
     'Limpieza de Husillo CNC',
@@ -33,10 +33,14 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
   @override
   void initState() {
     super.initState();
-    // Default select
-    _selectedClient = _clients[0];
-    _selectedActivity = _activityTypes[0];
     _selectedOrder = _orders[0];
+    
+    // Fetch catalogs from backend API
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final state = Provider.of<AppState>(context, listen: false);
+      state.fetchClients();
+      state.fetchCatalogActivities();
+    });
   }
 
   @override
@@ -66,6 +70,18 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
     final state = Provider.of<AppState>(context);
     final theme = Theme.of(context);
 
+    // Resolve client list from API catalog, fallback to local default
+    final clients = state.catalogClients.isNotEmpty ? state.catalogClients : _clientsFallback;
+    if (_selectedClient == null || !clients.contains(_selectedClient)) {
+      _selectedClient = clients.first;
+    }
+
+    // Resolve activity list from API catalog, fallback to local default
+    final activities = state.catalogActivities.isNotEmpty ? state.catalogActivities : _activityTypesFallback;
+    if (_selectedActivity == null || !activities.contains(_selectedActivity)) {
+      _selectedActivity = activities.first;
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -84,7 +100,7 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
               _buildDropdownField(
                 label: 'Cliente',
                 value: _selectedClient,
-                items: _clients,
+                items: clients,
                 onChanged: (val) => setState(() => _selectedClient = val),
               ),
               const SizedBox(height: 20),
@@ -93,7 +109,7 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
               _buildDropdownField(
                 label: 'Tipo de Actividad',
                 value: _selectedActivity,
-                items: _activityTypes,
+                items: activities,
                 onChanged: (val) => setState(() => _selectedActivity = val),
               ),
               const SizedBox(height: 20),

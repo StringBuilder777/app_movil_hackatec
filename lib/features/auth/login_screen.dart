@@ -61,26 +61,15 @@ class _LoginScreenState extends State<LoginScreen> {
               // ROCEEL Logo Header
               Center(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   decoration: BoxDecoration(
                     color: AppColors.primaryDark,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.engineering_rounded, color: AppColors.accent, size: 28),
-                      const SizedBox(width: 8),
-                      Text(
-                        'ROCEEL',
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: AppColors.white,
-                          fontSize: 22,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ],
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: 80,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

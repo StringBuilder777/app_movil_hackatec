@@ -38,16 +38,35 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
     });
   }
 
-  void _handleSave(AppState state) {
+  void _handleSave(AppState state) async {
     if (_textController.text.trim().isNotEmpty) {
-      if (widget.isCompleteAction) {
-        state.saveActivityReport(_textController.text);
-        // This will trigger the Timer Screen pop automatic callback or we can pop here.
-        Navigator.pop(context); // Pop Report Screen
-      } else {
-        // Just save a draft or log report (mock action)
-        state.saveActivityReport(_textController.text);
+      // Show loading indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      final success = await state.saveActivityReport(_textController.text);
+      
+      // Close loading indicator
+      if (mounted) {
         Navigator.pop(context);
+      }
+
+      if (mounted) {
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Reporte guardado y sincronizado con éxito.')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Reporte guardado localmente (se sincronizará al recuperar conexión).')),
+          );
+        }
+        Navigator.pop(context); // Pop Report Screen
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +120,13 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
                   children: [
                     _buildMetadataRow(Icons.schedule_rounded, 'Timestamp', todayString),
                     const Divider(height: 16),
-                    _buildMetadataRow(Icons.my_location_rounded, 'Ubicación GPS', '25.5562, -100.9314 (±8m)'),
+                    _buildMetadataRow(
+                      Icons.my_location_rounded,
+                      'Ubicación GPS',
+                      state.currentPosition != null
+                          ? '${state.currentPosition!.latitude.toStringAsFixed(6)}, ${state.currentPosition!.longitude.toStringAsFixed(6)} (±${state.currentPosition!.accuracy.toStringAsFixed(1)}m)'
+                          : '25.5562, -100.9314 (±8m)',
+                    ),
                     const Divider(height: 16),
                     _buildMetadataRow(Icons.link_rounded, 'Actividad', title),
                   ],

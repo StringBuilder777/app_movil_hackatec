@@ -5,8 +5,46 @@ import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../core/widgets/custom_card.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
+
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
+  bool _isProcessing = false;
+
+  Future<void> _handleCheckOut(AppState state) async {
+    setState(() {
+      _isProcessing = true;
+    });
+
+    final success = await state.confirmCheckOut();
+
+    if (mounted) {
+      setState(() {
+        _isProcessing = false;
+      });
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✓ Check-Out registrado exitosamente. Shift cerrado.'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+        Navigator.pop(context); // Go back to dashboard
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('⚠ Error al registrar Check-Out. Intenta de nuevo.'),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,17 +172,15 @@ class CheckOutScreen extends StatelessWidget {
                     child: CustomButton(
                       text: 'Ver detalle',
                       isPrimary: false,
-                      onPressed: () {},
+                      onPressed: _isProcessing ? null : () {},
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomButton(
                       text: 'Confirmar check-out',
-                      onPressed: () {
-                        state.confirmCheckOut();
-                        Navigator.pop(context);
-                      },
+                      isLoading: _isProcessing,
+                      onPressed: _isProcessing ? null : () => _handleCheckOut(state),
                     ),
                   ),
                 ],

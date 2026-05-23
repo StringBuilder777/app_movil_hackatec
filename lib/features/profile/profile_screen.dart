@@ -35,11 +35,16 @@ class ProfileScreen extends StatelessWidget {
                     radius: 36,
                     backgroundColor: AppColors.primaryButton.withOpacity(0.15),
                     child: Text(
-                      state.employeeName
-                          .split(' ')
-                          .map((n) => n[0])
-                          .take(2)
-                          .join(),
+                      state.employeeName.trim().isEmpty
+                          ? 'RO'
+                          : state.employeeName
+                              .trim()
+                              .split(' ')
+                              .where((n) => n.isNotEmpty)
+                              .map((n) => n[0])
+                              .take(2)
+                              .join()
+                              .toUpperCase(),
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
