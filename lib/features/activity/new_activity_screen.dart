@@ -70,16 +70,16 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
     final state = Provider.of<AppState>(context);
     final theme = Theme.of(context);
 
-    // Resolve client list from API catalog, fallback to local default
-    final clients = state.catalogClients.isNotEmpty ? state.catalogClients : _clientsFallback;
+    // Resolve client list from API catalog, fallback to local default and ensure no duplicates
+    final clients = (state.catalogClients.isNotEmpty ? state.catalogClients : _clientsFallback).toSet().toList();
     if (_selectedClient == null || !clients.contains(_selectedClient)) {
-      _selectedClient = clients.first;
+      _selectedClient = clients.isNotEmpty ? clients.first : null;
     }
 
-    // Resolve activity list from API catalog, fallback to local default
-    final activities = state.catalogActivities.isNotEmpty ? state.catalogActivities : _activityTypesFallback;
+    // Resolve activity list from API catalog, fallback to local default and ensure no duplicates
+    final activities = (state.catalogActivities.isNotEmpty ? state.catalogActivities : _activityTypesFallback).toSet().toList();
     if (_selectedActivity == null || !activities.contains(_selectedActivity)) {
-      _selectedActivity = activities.first;
+      _selectedActivity = activities.isNotEmpty ? activities.first : null;
     }
 
     return Scaffold(
@@ -182,6 +182,13 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
     required ValueChanged<String?> onChanged,
   }) {
     final theme = Theme.of(context);
+    
+    // Ensure value is present in items to prevent DropdownButton assertion crash
+    String? effectiveValue = value;
+    if (effectiveValue == null || !items.contains(effectiveValue)) {
+      effectiveValue = items.isNotEmpty ? items.first : null;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -203,7 +210,7 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               isExpanded: true,
-              value: value,
+              value: effectiveValue,
               items: items.map((item) {
                 return DropdownMenuItem(
                   value: item,

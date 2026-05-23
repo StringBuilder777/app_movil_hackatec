@@ -51,22 +51,18 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
 
       final success = await state.saveActivityReport(_textController.text);
       
-      // Close loading indicator
       if (mounted) {
-        Navigator.pop(context);
-      }
+        // Regresar a la pantalla raíz (NavShell) cerrando el diálogo, la pantalla de reporte y el timer
+        Navigator.of(context).popUntil((route) => route.isFirst);
 
-      if (mounted) {
-        if (success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Reporte guardado y sincronizado con éxito.')),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Reporte guardado localmente (se sincronizará al recuperar conexión).')),
-          );
-        }
-        Navigator.pop(context); // Pop Report Screen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(success
+                ? 'Reporte guardado y sincronizado con éxito.'
+                : 'Reporte guardado localmente (se sincronizará al recuperar conexión).'),
+            backgroundColor: success ? AppColors.success : AppColors.warning,
+          ),
+        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

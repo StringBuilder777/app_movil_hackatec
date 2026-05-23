@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import '../../core/state/app_state.dart';
@@ -355,7 +356,9 @@ class DashboardScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Desde 08:14 AM',
+                              state.checkInTime != null
+                                  ? 'Desde ${DateFormat('hh:mm a').format(state.checkInTime!.toLocal())}'
+                                  : 'Desde 08:14 AM',
                               style: theme.textTheme.bodyMedium,
                             ),
                           ],

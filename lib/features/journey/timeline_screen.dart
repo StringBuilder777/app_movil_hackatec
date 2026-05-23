@@ -8,10 +8,92 @@ import '../activity/new_activity_screen.dart';
 class TimelineScreen extends StatelessWidget {
   const TimelineScreen({super.key});
 
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = duration.inHours;
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    return "${hours}h ${minutes}m";
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<AppState>(context);
     final theme = Theme.of(context);
+
+    // Calculate dynamic shift header metrics
+    final String normalTime = _formatDuration(state.shiftElapsed);
+    final String extraTime = state.simulatedExtraHours ? '1h 25m' : '0h 00m';
+    final String transitTime = state.activeActivity == null && state.isCheckedIn ? '18m' : '0m';
+
+    // Construct dynamic timeline segments
+    final List<Widget> timelineWidgets = [];
+
+    if (state.isCheckedIn) {
+      // 1. Check-In Segment
+      if (state.checkInTime != null) {
+        final startHour = state.checkInTime!.toLocal().hour.toString().padLeft(2, '0');
+        final startMin = state.checkInTime!.toLocal().minute.toString().padLeft(2, '0');
+        timelineWidgets.add(
+          _buildTimelineItem(
+            time: '$startHour:$startMin',
+            title: state.currentZoneName,
+            subtitle: 'Inicio de jornada (Check-In registrado)',
+            category: 'Check-In',
+            indicatorColor: AppColors.success,
+            icon: Icons.how_to_reg_rounded,
+            isFirst: true,
+          ),
+        );
+      }
+
+      // 2. Completed Activities (reversed to chronological order)
+      final completedActivities = state.activities.reversed.toList();
+      for (int i = 0; i < completedActivities.length; i++) {
+        final act = completedActivities[i];
+        timelineWidgets.add(
+          _buildTimelineItem(
+            time: act['time'] ?? '',
+            title: act['client'] ?? 'Taller ROCEEL',
+            subtitle: act['title'] ?? 'Actividad',
+            category: 'Trabajo • ${act['duration'] ?? ''}',
+            indicatorColor: AppColors.success,
+            icon: Icons.check_circle_rounded,
+          ),
+        );
+      }
+
+      // 3. Active activity or waiting status
+      if (state.activeActivity != null) {
+        final start = state.activeActivity!['startTime'] as DateTime;
+        final startHour = start.toLocal().hour.toString().padLeft(2, '0');
+        final startMin = start.toLocal().minute.toString().padLeft(2, '0');
+
+        timelineWidgets.add(
+          _buildTimelineItem(
+            time: '$startHour:$startMin - Ahora',
+            title: state.activeActivity!['client'] ?? 'Taller ROCEEL',
+            subtitle: 'Actividad: ${state.activeActivity!['title'] ?? ''}',
+            category: 'Trabajo • En curso',
+            indicatorColor: AppColors.accent,
+            icon: Icons.engineering_rounded,
+            isLast: true,
+            isActive: true,
+          ),
+        );
+      } else {
+        timelineWidgets.add(
+          _buildTimelineItem(
+            time: 'En curso',
+            title: state.currentZoneName,
+            subtitle: 'En espera / Listo para iniciar actividad',
+            category: 'En espera',
+            indicatorColor: AppColors.textSecondary,
+            icon: Icons.hourglass_empty_rounded,
+            isLast: true,
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -33,11 +115,11 @@ class TimelineScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildHeaderMetric('Normal', '4h 12m', AppColors.success),
+                  _buildHeaderMetric('Normal', normalTime, AppColors.success),
                   Container(height: 30, width: 1, color: AppColors.border),
-                  _buildHeaderMetric('Extra', '0h 00m', AppColors.extraHourBadge),
+                  _buildHeaderMetric('Extra', extraTime, AppColors.extraHourBadge),
                   Container(height: 30, width: 1, color: AppColors.border),
-                  _buildHeaderMetric('Tránsito', '18m', AppColors.info),
+                  _buildHeaderMetric('Tránsito', transitTime, AppColors.info),
                 ],
               ),
             ),
@@ -62,42 +144,7 @@ class TimelineScreen extends StatelessWidget {
               ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  // Segment 1 (Completed Maintenance)
-                  _buildTimelineItem(
-                    time: '08:14 - 10:45',
-                    title: 'Taller Ramos Arizpe',
-                    subtitle: 'Mantenimiento Preventivo L1',
-                    category: 'Trabajo • 2h 31m',
-                    indicatorColor: AppColors.success,
-                    icon: Icons.check_circle_rounded,
-                    isFirst: true,
-                  ),
-
-                  // Segment 2 (In Transit)
-                  _buildTimelineItem(
-                    time: '10:45 - 11:03',
-                    title: 'En Tránsito',
-                    subtitle: 'Desplazamiento a locación 2',
-                    category: 'Tránsito • 18m',
-                    indicatorColor: AppColors.info,
-                    icon: Icons.directions_car_rounded,
-                  ),
-
-                  // Segment 3 (Active work or current timeline point)
-                  _buildTimelineItem(
-                    time: '11:03 - Ahora',
-                    title: 'Planta GM',
-                    subtitle: state.activeActivity != null
-                        ? 'Actividad: ${state.activeActivity!['title']}'
-                        : 'En espera / Asignado a planta',
-                    category: 'Trabajo • En curso',
-                    indicatorColor: AppColors.success,
-                    icon: Icons.build_rounded,
-                    isLast: true,
-                    isActive: true,
-                  ),
-                ],
+                children: timelineWidgets,
               ),
             ],
           ],

@@ -22,13 +22,8 @@ class ActivityTimerScreen extends StatelessWidget {
     final state = Provider.of<AppState>(context);
     final theme = Theme.of(context);
 
-    // If activity was cleared (e.g. from completion), close timer screen
+    // If activity was cleared (e.g. from completion), show loader (will be popped by report screen)
     if (state.activeActivity == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
-      });
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 

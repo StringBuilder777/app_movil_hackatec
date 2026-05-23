@@ -64,6 +64,14 @@ class AppState extends ChangeNotifier {
   ];
   List<String> get catalogActivities => _catalogActivities;
 
+  // Real database activity objects mapping names to IDs
+  List<Map<String, dynamic>> _catalogActivitiesObjects = [];
+  List<Map<String, dynamic>> get catalogActivitiesObjects => _catalogActivitiesObjects;
+
+  // Active Bitacora ID for today's logs
+  int? _idBitacora;
+  int? get idBitacora => _idBitacora;
+
   bool _isLoadingCatalogs = false;
   bool get isLoadingCatalogs => _isLoadingCatalogs;
 
@@ -334,10 +342,15 @@ class AppState extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data['id_empleado'] != null) {
+          _idEmpleado = int.tryParse(data['id_empleado'].toString());
+        }
         if (data['nombre'] != null) {
           _employeeName = data['nombre'].toString();
         }
-        _employeeId = "RO-${_idEmpleado.toString().padLeft(4, '0')}";
+        if (_idEmpleado != null) {
+          _employeeId = "RO-${_idEmpleado.toString().padLeft(4, '0')}";
+        }
         notifyListeners();
       } else {
         debugPrint('Failed to load employee profile: ${response.statusCode}');
@@ -358,6 +371,8 @@ class AppState extends ChangeNotifier {
     _employeeName = "Juan Pérez";
     _employeeRole = "Técnico Electromecánico";
     _employeeId = "RO-3490";
+    _idBitacora = null;
+    _catalogActivitiesObjects = [];
     notifyListeners();
   }
 
@@ -706,23 +721,38 @@ class AppState extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final dynamic data = jsonDecode(response.body);
-        if (data != null && data is Map<String, dynamic>) {
+        Map<String, dynamic>? activeShift;
+        if (data is List) {
+          final match = data.firstWhere(
+            (item) => item is Map<String, dynamic> && item['id_empleado'] == _idEmpleado,
+            orElse: () => null,
+          );
+          if (match != null) {
+            activeShift = match as Map<String, dynamic>;
+          }
+        } else if (data is Map<String, dynamic>) {
+          activeShift = data;
+        }
+
+        if (activeShift != null) {
           _isCheckedIn = true;
-          if (data['inicio'] != null) {
-            _checkInTime = DateTime.parse(data['inicio'].toString());
+          if (activeShift['inicio'] != null) {
+            _checkInTime = DateTime.parse(activeShift['inicio'].toString());
             _shiftElapsed = DateTime.now().difference(_checkInTime!);
           }
-          if (data['localizacion_checkin'] != null && data['localizacion_checkin']['nombre'] != null) {
-            _currentZoneName = data['localizacion_checkin']['nombre'].toString();
+          if (activeShift['localizacion_checkin'] != null && activeShift['localizacion_checkin']['nombre'] != null) {
+            _currentZoneName = activeShift['localizacion_checkin']['nombre'].toString();
           }
           notifyListeners();
           debugPrint('Active shift found and restored.');
+          // Load bitacora activities recorded today
+          await fetchBitacoraActividades();
         } else {
           _isCheckedIn = false;
           _checkInTime = null;
           _shiftElapsed = Duration.zero;
           notifyListeners();
-          debugPrint('No active shift found (null response).');
+          debugPrint('No active shift found for employee $_idEmpleado.');
         }
       } else {
         debugPrint('Failed to fetch active shift: ${response.statusCode}');
@@ -773,9 +803,17 @@ class AppState extends ChangeNotifier {
           }
         }
         notifyListeners();
+        // Load or create bitacora for today's shift and load activities
+        await fetchBitacoraActividades();
         return true;
       } else {
         debugPrint('Checkin failed: ${response.statusCode} - ${response.body}');
+        // Intentar auto-recuperar si el backend indica que ya hay una jornada activa
+        await fetchActiveJornada();
+        if (_isCheckedIn) {
+          debugPrint('Jornada recuperada exitosamente en el flujo de auto-curación de Check-in.');
+          return true;
+        }
         return false;
       }
     } catch (e) {
@@ -878,7 +916,7 @@ class AppState extends ChangeNotifier {
             }
           }
           if (loadedClients.isNotEmpty) {
-            _catalogClients = loadedClients;
+            _catalogClients = loadedClients.toSet().toList();
           }
         }
       } else {
@@ -908,16 +946,16 @@ class AppState extends ChangeNotifier {
       if (response.statusCode == 200) {
         final dynamic data = jsonDecode(response.body);
         if (data is List) {
+          _catalogActivitiesObjects = List<Map<String, dynamic>>.from(data);
+          
           final List<String> loadedActivities = [];
-          for (var item in data) {
-            if (item is String) {
-              loadedActivities.add(item);
-            } else if (item is Map && item['nombre'] != null) {
+          for (var item in _catalogActivitiesObjects) {
+            if (item['activo'] != false && item['nombre'] != null) {
               loadedActivities.add(item['nombre'].toString());
             }
           }
           if (loadedActivities.isNotEmpty) {
-            _catalogActivities = loadedActivities;
+            _catalogActivities = loadedActivities.toSet().toList();
           }
         }
       } else {
@@ -931,12 +969,186 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  Future<bool> saveActivityReport(String text) async {
-    if (_activeActivity == null) return false;
+  // Fetch or create a daily bitacora record for the current employee
+  Future<int?> fetchOrCreateBitacora() async {
+    if (_idBitacora != null) return _idBitacora;
+    if (_idEmpleado == null) return null;
 
-    final String activityTitle = _activeActivity!['title'] ?? 'Actividad';
-    final String clientName = _activeActivity!['client'] ?? 'Cliente';
+    final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    try {
+      // 1. Check if bitacora already exists for today
+      final response = await http.get(
+        Uri.parse('${ApiConfig.baseUrl}/bitacoras'),
+        headers: {
+          'Accept': 'application/json',
+          if (_accessToken != null) 'Authorization': 'Bearer $_accessToken',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final dynamic data = jsonDecode(response.body);
+        if (data is List) {
+          for (var item in data) {
+            if (item is Map &&
+                item['id_empleado'] == _idEmpleado &&
+                item['fecha'] != null &&
+                item['fecha'].toString().startsWith(todayStr)) {
+              _idBitacora = item['id_bitacora'] as int?;
+              debugPrint('Resolved existing bitacora for today: $_idBitacora');
+              return _idBitacora;
+            }
+          }
+        }
+      }
+
+      // 2. If not found, create new bitacora
+      final createResponse = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}/bitacoras'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          if (_accessToken != null) 'Authorization': 'Bearer $_accessToken',
+        },
+        body: jsonEncode({
+          'id_empleado': _idEmpleado,
+          'fecha': DateTime.now().toUtc().toIso8601String(),
+        }),
+      ).timeout(const Duration(seconds: 10));
+
+      if (createResponse.statusCode == 200 || createResponse.statusCode == 201) {
+        final Map<String, dynamic> data = jsonDecode(createResponse.body);
+        _idBitacora = data['id_bitacora'] as int?;
+        debugPrint('Created new bitacora for today: $_idBitacora');
+        return _idBitacora;
+      } else {
+        debugPrint('Failed to create bitacora: ${createResponse.statusCode} - ${createResponse.body}');
+      }
+    } catch (e) {
+      debugPrint('Error resolving/creating bitacora: $e');
+    }
+    return null;
+  }
+
+  // Fetch activities associated with today's bitacora
+  Future<void> fetchBitacoraActividades() async {
+    final bitacoraId = await fetchOrCreateBitacora();
+    if (bitacoraId == null) return;
+
+    try {
+      final response = await http.get(
+        Uri.parse('${ApiConfig.baseUrl}/bitacoras/$bitacoraId/actividades'),
+        headers: {
+          'Accept': 'application/json',
+          if (_accessToken != null) 'Authorization': 'Bearer $_accessToken',
+        },
+      ).timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final dynamic data = jsonDecode(response.body);
+        if (data is List) {
+          _activities.clear();
+          _reports.clear();
+
+          for (var item in data) {
+            if (item is Map) {
+              final String name = item['nombre']?.toString() ?? 'Actividad';
+              final String comment = item['comentario']?.toString() ?? '';
+              
+              DateTime? start;
+              DateTime? fin;
+              if (item['inicio'] != null) {
+                start = DateTime.tryParse(item['inicio'].toString())?.toLocal();
+              }
+              if (item['fin'] != null) {
+                fin = DateTime.tryParse(item['fin'].toString())?.toLocal();
+              }
+
+              // Compute duration
+              String durationStr = '0h 0m';
+              if (start != null && fin != null) {
+                final diff = fin.difference(start);
+                durationStr = '${diff.inHours}h ${diff.inMinutes % 60}m';
+              }
+
+              // Compute range string
+              String timeRangeStr = '';
+              if (start != null && fin != null) {
+                final startHour = start.hour.toString().padLeft(2, '0');
+                final startMin = start.minute.toString().padLeft(2, '0');
+                final finHour = fin.hour.toString().padLeft(2, '0');
+                final finMin = fin.minute.toString().padLeft(2, '0');
+                timeRangeStr = '$startHour:$startMin - $finHour:$finMin';
+              }
+
+              // Compute date/timestamp format
+              String timestampStr = '';
+              if (fin != null) {
+                timestampStr = DateFormat('dd/MM/yyyy HH:mm').format(fin);
+              } else if (start != null) {
+                timestampStr = DateFormat('dd/MM/yyyy HH:mm').format(start);
+              }
+
+              // Parse client GM or others if prefixed as "Cliente: GM\n..."
+              String clientName = 'Taller ROCEEL';
+              String cleanComment = comment;
+              if (comment.startsWith('Cliente: ')) {
+                final lines = comment.split('\n');
+                clientName = lines.first.replaceFirst('Cliente: ', '');
+                if (lines.length > 1) {
+                  cleanComment = lines.sublist(1).join('\n');
+                }
+              }
+
+              _activities.add({
+                'title': name,
+                'client': clientName,
+                'category': 'mantenimiento',
+                'duration': durationStr,
+                'status': 'Completada',
+                'time': timeRangeStr,
+              });
+
+              _reports.add({
+                'title': name,
+                'client': clientName,
+                'timestamp': timestampStr,
+                'gpsLocation': '25.5562, -100.9314',
+                'text': cleanComment,
+                'synced': true,
+              });
+            }
+          }
+          notifyListeners();
+          debugPrint('Sync completed: loaded ${_activities.length} activities from bitacora $bitacoraId.');
+        }
+      } else {
+        debugPrint('Failed to load bitacora activities: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error loading bitacora activities: $e');
+    }
+  }
+
+  Future<bool> saveActivityReport(String text) async {
+    final activeActivityBackup = _activeActivity;
+    if (activeActivityBackup == null) return false;
+
+    final String activityTitle = activeActivityBackup['title'] ?? 'Actividad';
+    final String clientName = activeActivityBackup['client'] ?? 'Cliente';
     final String fullDescription = 'Cliente: $clientName\n$text';
+
+    // Heuristically resolve catalog activity ID
+    int idActividad = 1; // Default to 1
+    if (_catalogActivitiesObjects.isNotEmpty) {
+      final match = _catalogActivitiesObjects.firstWhere(
+        (act) => act['nombre'] == activityTitle,
+        orElse: () => <String, dynamic>{},
+      );
+      if (match.isNotEmpty && match['id_actividad'] != null) {
+        idActividad = match['id_actividad'] as int;
+      }
+    }
 
     final reportItem = {
       'title': activityTitle,
@@ -964,7 +1176,6 @@ class AppState extends ChangeNotifier {
       'time': '13:10 - ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}'
     });
 
-    final activeActivityBackup = _activeActivity;
     final activityElapsedBackup = _activityElapsed;
 
     _activeActivity = null;
@@ -973,25 +1184,36 @@ class AppState extends ChangeNotifier {
 
     if (_isOnline) {
       try {
+        final bitacoraId = await fetchOrCreateBitacora();
+        if (bitacoraId == null) {
+          debugPrint('Cannot save activity report because no bitacora could be resolved.');
+          return false;
+        }
+
+        final startStr = (activeActivityBackup['startTime'] as DateTime).toUtc().toIso8601String();
+        final finStr = DateTime.now().toUtc().toIso8601String();
+
         final response = await http.post(
-          ApiConfig.actividadesUrl,
+          Uri.parse('${ApiConfig.baseUrl}/bitacoras/$bitacoraId/actividades'),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             if (_accessToken != null) 'Authorization': 'Bearer $_accessToken',
           },
           body: jsonEncode({
-            'nombre': activityTitle,
-            'descripcion': fullDescription,
-            'activo': true,
+            'id_actividad': idActividad,
+            'inicio': startStr,
+            'fin': finStr,
+            'comentario': fullDescription,
           }),
         ).timeout(const Duration(seconds: 10));
 
         if (response.statusCode == 200 || response.statusCode == 201) {
-          debugPrint('Activity reported successfully to server.');
+          debugPrint('Activity reported successfully to bitacora $bitacoraId.');
+          await fetchBitacoraActividades(); // Reload from server to keep sync
           return true;
         } else {
-          debugPrint('Failed to post activity: ${response.statusCode} - ${response.body}');
+          debugPrint('Failed to post activity to bitacora: ${response.statusCode} - ${response.body}');
           reportItem['synced'] = false;
           _pendingChanges++;
           notifyListeners();
