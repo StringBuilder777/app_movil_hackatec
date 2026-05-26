@@ -47,6 +47,14 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>ROCEEL Operativo utiliza Face ID para verificar tu identidad y proteger el acceso a la aplicación.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>ROCEEL Operativo necesita acceso a la cámara para verificar tu identidad mediante reconocimiento facial durante el check-in y check-out.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ROCEEL Operativo necesita tu ubicación para validar que te encuentras dentro de las zonas de trabajo autorizadas.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>ROCEEL Operativo necesita acceso continuo a tu ubicación para el seguimiento de jornada y validación de zonas de trabajo.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

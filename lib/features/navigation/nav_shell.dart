@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/services/biometric_auth_service.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/sensor_simulation_panel.dart';
+import '../auth/biometric_lock_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../journey/timeline_screen.dart';
 import '../activity/activities_list_screen.dart';
@@ -16,8 +18,47 @@ class NavShell extends StatefulWidget {
   State<NavShell> createState() => _NavShellState();
 }
 
-class _NavShellState extends State<NavShell> {
+class _NavShellState extends State<NavShell> with WidgetsBindingObserver {
   int _currentIndex = 0;
+  bool _isLocked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && !_isLocked) {
+      _showBiometricLock();
+    }
+  }
+
+  Future<void> _showBiometricLock() async {
+    final available = await BiometricAuthService.instance.isAvailable();
+    if (!available || !mounted) return;
+
+    _isLocked = true;
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const BiometricLockScreen(),
+      ),
+    );
+    _isLocked = false;
+
+    if (result != true && mounted) {
+      _showBiometricLock();
+    }
+  }
 
   final List<Widget> _screens = [
     const DashboardScreen(),

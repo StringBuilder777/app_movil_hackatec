@@ -4,6 +4,7 @@ import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../core/widgets/custom_card.dart';
+import '../security/face_verification_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -23,6 +24,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   Future<void> _handleCheckOut(AppState state) async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => const FaceVerificationScreen()),
+    );
+
+    if (result != true) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('⚠ Verificación facial requerida para hacer check-out.'),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
+      return;
+    }
+
     setState(() {
       _isProcessing = true;
     });
@@ -41,7 +59,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             backgroundColor: AppColors.success,
           ),
         );
-        Navigator.pop(context); // Go back to dashboard
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/services/biometric_auth_service.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
@@ -27,20 +28,39 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleLogin() async {
     final state = Provider.of<AppState>(context, listen: false);
     final success = await state.login(_correoController.text.trim(), _passwordController.text);
-    if (mounted) {
-      if (success) {
+    if (!mounted) return;
+
+    if (success) {
+      final bioAvailable = await BiometricAuthService.instance.isAvailable();
+      if (bioAvailable && mounted) {
+        final bioSuccess = await BiometricAuthService.instance.authenticate(
+          reason: 'Confirma tu identidad para acceder a ROCEEL Operativo',
+        );
+        if (!mounted) return;
+        if (!bioSuccess) {
+          state.logout();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Verificación biométrica requerida para continuar.'),
+              backgroundColor: AppColors.danger,
+            ),
+          );
+          return;
+        }
+      }
+      if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const PermissionsScreen()),
         );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(state.loginError ?? 'Error de inicio de sesión.'),
-            backgroundColor: AppColors.danger,
-            duration: const Duration(seconds: 4),
-          ),
-        );
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(state.loginError ?? 'Error de inicio de sesión.'),
+          backgroundColor: AppColors.danger,
+          duration: const Duration(seconds: 4),
+        ),
+      );
     }
   }
 

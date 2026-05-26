@@ -3,9 +3,12 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../core/services/face_recognition_service.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
+import '../security/face_enrollment_screen.dart';
+import '../security/face_verification_screen.dart';
 
 class CheckInScreen extends StatefulWidget {
   const CheckInScreen({super.key});
@@ -33,6 +36,39 @@ class _CheckInScreenState extends State<CheckInScreen> {
   }
 
   Future<void> _handleCheckIn(AppState state) async {
+    final employeeId = state.idEmpleado;
+    if (employeeId == null) return;
+
+    final enrolled = await FaceRecognitionService.instance.isEnrolled(employeeId);
+    if (!mounted) return;
+
+    bool faceVerified;
+    if (!enrolled) {
+      final result = await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(builder: (_) => const FaceEnrollmentScreen()),
+      );
+      faceVerified = result == true;
+    } else {
+      final result = await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(builder: (_) => const FaceVerificationScreen()),
+      );
+      faceVerified = result == true;
+    }
+
+    if (!faceVerified) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('⚠ Verificación facial requerida para hacer check-in.'),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
+      return;
+    }
+
     setState(() {
       _isProcessing = true;
     });
@@ -51,7 +87,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
             backgroundColor: AppColors.success,
           ),
         );
-        Navigator.pop(context); // Go back to dashboard
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

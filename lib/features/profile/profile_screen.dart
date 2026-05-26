@@ -1,12 +1,47 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/services/face_recognition_service.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_card.dart';
 import '../auth/login_screen.dart';
+import '../security/face_enrollment_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isEnrolled = false;
+  String? _enrollmentPhotoPath;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkEnrollment();
+  }
+
+  Future<void> _checkEnrollment() async {
+    final state = Provider.of<AppState>(context, listen: false);
+    final id = state.idEmpleado;
+    if (id != null) {
+      final enrolled = await FaceRecognitionService.instance.isEnrolled(id);
+      String? photoPath;
+      if (enrolled) {
+        photoPath = await FaceRecognitionService.instance.getEnrollmentPhotoPath(id);
+      }
+      if (mounted) {
+        setState(() {
+          _isEnrolled = enrolled;
+          _enrollmentPhotoPath = photoPath;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +69,28 @@ class ProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 36,
                     backgroundColor: AppColors.primaryButton.withOpacity(0.15),
-                    child: Text(
-                      state.employeeName.trim().isEmpty
-                          ? 'RO'
-                          : state.employeeName
-                              .trim()
-                              .split(' ')
-                              .where((n) => n.isNotEmpty)
-                              .map((n) => n[0])
-                              .take(2)
-                              .join()
-                              .toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryButton,
-                      ),
-                    ),
+                    backgroundImage: _enrollmentPhotoPath != null
+                        ? FileImage(File(_enrollmentPhotoPath!))
+                        : null,
+                    child: _enrollmentPhotoPath == null
+                        ? Text(
+                            state.employeeName.trim().isEmpty
+                                ? 'RO'
+                                : state.employeeName
+                                    .trim()
+                                    .split(' ')
+                                    .where((n) => n.isNotEmpty)
+                                    .map((n) => n[0])
+                                    .take(2)
+                                    .join()
+                                    .toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryButton,
+                            ),
+                          )
+                        : null,
                   ),
                   const SizedBox(width: 20),
                   Expanded(
@@ -152,15 +192,79 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Security details
+            // Security & Face Recognition
             CustomCard(
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.security_rounded, color: AppColors.textSecondary),
-                title: const Text('Seguridad', style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: const Text('Actualiza tu contraseña de acceso'),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () {},
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.security_rounded, color: AppColors.primaryHighlight, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'SEGURIDAD BIOMÉTRICA',
+                        style: theme.textTheme.labelMedium?.copyWith(color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: _isEnrolled
+                              ? AppColors.success.withOpacity(0.1)
+                              : AppColors.warning.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _isEnrolled ? Icons.face_retouching_natural : Icons.face_rounded,
+                          color: _isEnrolled ? AppColors.success : AppColors.warning,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Reconocimiento facial', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(
+                              _isEnrolled ? 'Rostro registrado' : 'Sin registro facial',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: _isEnrolled ? AppColors.success : AppColors.warning,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          final result = await Navigator.push<bool>(
+                            context,
+                            MaterialPageRoute(builder: (_) => const FaceEnrollmentScreen()),
+                          );
+                          if (result == true) _checkEnrollment();
+                        },
+                        child: Text(
+                          _isEnrolled ? 'Re-registrar' : 'Registrar',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 24),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.lock_rounded, color: AppColors.textSecondary),
+                    title: const Text('Contraseña', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    subtitle: const Text('Actualiza tu contraseña de acceso'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () {},
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),

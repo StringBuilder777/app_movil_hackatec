@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import '../config/api_config.dart';
+import '../services/face_recognition_service.dart';
 
 class AppState extends ChangeNotifier {
   // Authentication & Profile Info
@@ -41,6 +43,9 @@ class AppState extends ChangeNotifier {
   Position? get currentPosition => _currentPosition;
 
   StreamSubscription<Position>? _positionSubscription;
+
+  bool _cameraPermission = false;
+  bool get cameraPermission => _cameraPermission;
 
   bool _notificationsPermission = false;
   bool get notificationsPermission => _notificationsPermission;
@@ -361,6 +366,9 @@ class AppState extends ChangeNotifier {
   }
 
   void logout() {
+    if (_idEmpleado != null) {
+      FaceRecognitionService.instance.clearEnrollment(_idEmpleado!);
+    }
     _isLoggedIn = false;
     _accessToken = null;
     _idEmpleado = null;
@@ -373,6 +381,7 @@ class AppState extends ChangeNotifier {
     _employeeId = "RO-3490";
     _idBitacora = null;
     _catalogActivitiesObjects = [];
+    _cameraPermission = false;
     notifyListeners();
   }
 
@@ -422,6 +431,25 @@ class AppState extends ChangeNotifier {
     } catch (e) {
       debugPrint("Error requesting location permission: $e");
       _locationPermission = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void setCameraPermission(bool granted) {
+    _cameraPermission = granted;
+    notifyListeners();
+  }
+
+  Future<bool> checkAndRequestCameraPermission() async {
+    try {
+      final cameras = await availableCameras();
+      _cameraPermission = cameras.isNotEmpty;
+      notifyListeners();
+      return _cameraPermission;
+    } catch (e) {
+      debugPrint("Error requesting camera permission: $e");
+      _cameraPermission = false;
       notifyListeners();
       return false;
     }

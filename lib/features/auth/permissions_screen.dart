@@ -108,6 +108,71 @@ class PermissionsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
+              // Camera Permission Card (Mandatory)
+              GestureDetector(
+                onTap: () async {
+                  if (!state.cameraPermission) {
+                    await state.checkAndRequestCameraPermission();
+                  } else {
+                    state.setCameraPermission(false);
+                  }
+                },
+                child: CustomCard(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: state.cameraPermission ? AppColors.success.withOpacity(0.1) : AppColors.primaryHeader.withOpacity(0.05),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.camera_alt_rounded,
+                          color: state.cameraPermission ? AppColors.success : AppColors.primaryButton,
+                          size: 28,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Cámara (Reconocimiento facial)',
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Obligatoria para verificar tu identidad mediante reconocimiento facial durante el check-in y check-out.',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Checkbox(
+                        activeColor: AppColors.success,
+                        value: state.cameraPermission,
+                        onChanged: (val) async {
+                          if (val == true) {
+                            await state.checkAndRequestCameraPermission();
+                          } else {
+                            state.setCameraPermission(false);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
               // Notifications Permission Card (Optional)
               CustomCard(
                 padding: const EdgeInsets.all(20),
@@ -165,7 +230,7 @@ class PermissionsScreen extends StatelessWidget {
               CustomButton(
                 text: 'Continuar',
                 icon: Icons.arrow_forward_rounded,
-                onPressed: state.locationPermission
+                onPressed: (state.locationPermission && state.cameraPermission)
                     ? () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => const NavShell()),
