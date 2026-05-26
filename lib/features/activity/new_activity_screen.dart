@@ -27,13 +27,11 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
 
   String? _selectedClient;
   String? _selectedActivity;
-  String? _selectedOrder;
   final _notesController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _selectedOrder = _orders[0];
     
     // Fetch catalogs from backend API
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -50,11 +48,11 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
   }
 
   void _handleStartActivity(AppState state) {
-    if (_selectedClient != null && _selectedActivity != null && _selectedOrder != null) {
+    if (_selectedClient != null && _selectedActivity != null) {
       state.startNewActivity(
         _selectedClient!,
         _selectedActivity!,
-        _selectedOrder!,
+        'Sin OT',
         _notesController.text,
       );
 
@@ -111,15 +109,6 @@ class _NewActivityScreenState extends State<NewActivityScreen> {
                 value: _selectedActivity,
                 items: activities,
                 onChanged: (val) => setState(() => _selectedActivity = val),
-              ),
-              const SizedBox(height: 20),
-
-              // Dropdown: OT
-              _buildDropdownField(
-                label: 'Orden de trabajo (OT)',
-                value: _selectedOrder,
-                items: _orders,
-                onChanged: (val) => setState(() => _selectedOrder = val),
               ),
               const SizedBox(height: 28),
 
