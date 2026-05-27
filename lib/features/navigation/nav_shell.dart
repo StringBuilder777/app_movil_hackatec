@@ -36,7 +36,7 @@ class _NavShellState extends State<NavShell> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && !_isLocked) {
+    if (state == AppLifecycleState.resumed && !_isLocked && !BiometricAuthService.instance.isAuthenticating) {
       _showBiometricLock();
     }
   }

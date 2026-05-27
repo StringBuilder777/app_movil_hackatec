@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/services/biometric_auth_service.dart';
 import '../../core/state/app_state.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
 import '../../core/widgets/custom_card.dart';
-import '../security/face_verification_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -24,21 +24,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   Future<void> _handleCheckOut(AppState state) async {
-    final result = await Navigator.push<bool>(
-      context,
-      MaterialPageRoute(builder: (_) => const FaceVerificationScreen()),
-    );
-
-    if (result != true) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('⚠ Verificación facial requerida para hacer check-out.'),
-            backgroundColor: AppColors.danger,
-          ),
-        );
+    final biometricAvailable = await BiometricAuthService.instance.isAvailable();
+    if (biometricAvailable) {
+      final authenticated = await BiometricAuthService.instance.authenticate(
+        reason: 'Verifica tu identidad para hacer check-out',
+      );
+      if (!authenticated) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('⚠ Verificación biométrica requerida para hacer check-out.'),
+              backgroundColor: AppColors.danger,
+            ),
+          );
+        }
+        return;
       }
-      return;
     }
 
     setState(() {

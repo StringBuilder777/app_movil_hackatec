@@ -7,6 +7,9 @@ class BiometricAuthService {
 
   final _auth = LocalAuthentication();
 
+  bool _isAuthenticating = false;
+  bool get isAuthenticating => _isAuthenticating;
+
   Future<bool> isAvailable() async {
     try {
       final canCheck = await _auth.canCheckBiometrics;
@@ -28,6 +31,7 @@ class BiometricAuthService {
   Future<bool> authenticate({
     String reason = 'Verifica tu identidad para continuar',
   }) async {
+    _isAuthenticating = true;
     try {
       return await _auth.authenticate(
         localizedReason: reason,
@@ -38,6 +42,13 @@ class BiometricAuthService {
       );
     } on PlatformException {
       return false;
+    } finally {
+      // Keep the flag active briefly so the NavShell lifecycle observer
+      // doesn't trigger the lock screen when the app resumes after the
+      // system biometric dialog closes.
+      Future.delayed(const Duration(seconds: 2), () {
+        _isAuthenticating = false;
+      });
     }
   }
 }
